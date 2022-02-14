@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quran/injection.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
