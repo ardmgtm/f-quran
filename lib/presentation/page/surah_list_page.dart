@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../application/bloc/surah_bloc.dart';
 import '../../injection.dart';
 import '../core/routes.dart';
+import '../core/style.dart';
 
 class SurahListPage extends StatelessWidget {
   const SurahListPage({Key? key}) : super(key: key);
@@ -13,7 +14,10 @@ class SurahListPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => getIt<SurahBloc>()..add(const SurahEvent.getSurahList()),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Daftar Surah'),
+          elevation: 0,
+        ),
         body: BlocBuilder<SurahBloc, SurahState>(
           builder: (context, state) {
             return state.maybeMap(
@@ -33,14 +37,26 @@ class SurahListPage extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      color: Colors.grey[200],
+                      color: Colors.grey[100],
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(surah.number.toString()),
-                            Text(surah.latinName ?? ''),
-                            Text(surah.arabicName ?? ''),
+                            Text(
+                              "${surah.number.toString()}. ${surah.latinName!}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              surah.arabicName!,
+                              style: arabicTextStyle.copyWith(
+                                fontSize: 24,
+                                color: Colors.grey[800],
+                              ),
+                            ),
                           ],
                         ),
                       ),
